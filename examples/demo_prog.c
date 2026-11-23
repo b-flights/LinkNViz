@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 void* build_graphs(void*) {
     printf("Visualization start.\n");
@@ -77,10 +78,10 @@ void* build_graphs(void*) {
     };
     create_viz_sector("Sector", sector_1);
 
-    float x_pos[] = {5.0, 10.0, 15.0, 20.0, 24.0, 30.0, 25.0, 22.0, 18.0, 14.0, 7.0, 5.0, 0.0};
-    float y_pos[] = {17.0, 17.0, 5.0, 20.0, 20.0, 5.0, 5.0, 15.0, -5.0, -5.0, 12.0, 2.0, 2.0};
+    const float x_pos[] = {5.0, 10.0, 15.0, 20.0, 24.0, 30.0, 25.0, 22.0, 18.0, 14.0, 7.0, 5.0, 0.0};
+    const float y_pos[] = {17.0, 17.0, 5.0, 20.0, 20.0, 5.0, 5.0, 15.0, -5.0, -5.0, 12.0, 2.0, 2.0};
 
-    viz_point poly_points[200];
+    viz_point poly_points[13];
 
     for (int i = 0; i < 13; i++) {
         poly_points[i].x = x_pos[i];
@@ -99,11 +100,20 @@ void* build_graphs(void*) {
     };
 
     int pict_id = create_viz_pictogram("Pictogram", pict);
-    char buf[128];
+
+    char buf[3];
     while (viz_running()) {
-        printf("How many pictogram elements: ");
-        fgets(buf, 128, stdin);
+        printf("How many pictogram elements (2 digits): ");
+        fgets(buf, 3, stdin);
         get_viz_pictogram(pict_id)->value = atoi(buf);
+
+        // Flush the extra input from stdin
+        if (strchr(buf, '\n') == NULL && strchr(buf, EOF) == NULL) {
+            int c;
+            while ((c = getchar()) != '\n' && c != EOF);
+        }
+
+        printf("%d elements\n", get_viz_pictogram(pict_id)->value);
     }
 }
 
