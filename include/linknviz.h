@@ -1,7 +1,8 @@
 #include <stdbool.h>
 
-const int MAX_OBJECTS = 2048;
-const int MAX_GRAPHICS = 512;
+#define MAX_OBJECTS 2048
+#define MAX_GRAPHICS 512
+#define MAX_NAME_LEN 32
 
 /* An RGBA color used by visualizer objects. */
 typedef struct {

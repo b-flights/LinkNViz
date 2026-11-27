@@ -10,8 +10,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_NAME_LEN 32
-
 static SDL_Window *window = NULL;
 static SDL_Renderer *renderer = NULL;
 
